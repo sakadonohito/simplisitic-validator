@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <title>Validator</title>
+</head>
+<body>
+  <h1>Validation</h1>
+  <p>Valivali Validation</p>
+  <form action="#" method="post" id="form1">
+    <div>
+      <p>Required</p>
+      <p><input type="text" name="name"  data-valid="required"/></p>
+      <p><textarea rows="5" cols="40" name="text" data-valid="required"></textarea></p>
+      <p><select name="selector" data-valid="required">
+        <option value="">------------</option>
+        <option value="Apple">Apple</option>
+        <option value="Orange">Orange</option>
+        <option value="Banana">Banana</option>
+        <option value="Cherry">Cherry</option>
+        <option value="Grape">Grape</option>
+      </select></p>
+    </div>
+    <div>
+      <p>Check</p>
+      <p>
+        <input type="radio" name="rb" value="chicken" id="radio-1" data-valid="checkRequired"/><label for="radio-1">Chicken</label>
+        <input type="radio" name="rb" value="beef" id="radio-2" data-valid="checkRequired"/><label for="radio-2">Beef</label>
+        <input type="radio" name="rb" value="pork" id="radio-3" data-valid="checkRequired"/><label for="radio-3">Pork</label>
+      </p>
+      <p><span>2 choices</span>
+        <input type="checkbox" name="cb" value="rice" id="cb-1" data-valid="checkRequired[2]" /><label for="cb-1">Rice</label>
+        <input type="checkbox" name="cb" value="bread" id="cb-2" data-valid="checkRequired[2]" /><label for="cb-2">Bread</label>
+        <input type="checkbox" name="cb" value="potato" id="cb-3" data-valid="checkRequired[2]" /><label for="cb-3">Potato</label>
+        <input type="checkbox" name="cb" value="corn" id="cb-4" data-valid="checkRequired[2]" /><label for="cb-4">Corn</label>
+      </p>
+    </div>
+    <div>
+      <p>Length</p>
+      <p><span>3 or more</span><input type="text" name="more" data-valid="min[3]"/></p>
+      <p><span>10 or less</span><input type="text" name="less" data-valid="max[10]"/></p>
+    </div>
+    <div>
+      <p>Others</p>
+      <p><span>email</span><input type="text" name="email" data-valid="email"/></p>
+      <p><span>number and alphabet</span><input type="text" name="na" data-valid="numalpha"/></p>
+    </div>
+    <div>
+      <p>Multiple Validation</p>
+      <p><span>Number and Required</span><input type="text" name="combo" data-valid="required,number"/></p>
+    </div>
+    <div>
+      <p><span>Hook: choice Etc -> change text required</span>
+        <input type="checkbox" name="choice" value="web" id="c1" data-valid="checkRequired" data-valid-hook="changeReq"/><label for="c1">Web</label>
+        <input type="checkbox" name="choice" value="etc" id="c2" data-valid="checkRequired" data-valid-hook="changeReq"/><label for="c2">Etc</label>
+        <p><span>Etc Detail</span><input type="text" name="etc" id="note"/></p>
+      </p>
+    </div>
+  </forpm>
+  <script src="js/validator.js"></script>
+  <script src="js/validator-extention.js"></script>
+  <script src="js/init.js"></script>
+</body>
+</html>
