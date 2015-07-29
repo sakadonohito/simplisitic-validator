@@ -19,7 +19,7 @@ var Validator = (function(){
 			return no <= ok;
 		},
 		email : function(self,elm){
-			return !!(elm.value == '' || elm.value.match(/[a-zA-Z0-9][a-zA-Z0-9._-]+@[a-zA-Z0-9.-_]+[a-z]+/));
+			return !!(elm.value == '' || elm.value.match(/^[a-zA-Z0-9][a-zA-Z0-9._-]+[a-zA-Z0-9]@[a-zA-Z0-9][a-zA-Z0-9.-_]+[a-z]+$/) && !/\.{2,}/.test(elm.value));
 		},
 		numalpha : function(self,elm){
 			return !!(elm.value == '' || elm.value.match(/^[a-zA-Z0-9]+$/));
@@ -42,15 +42,17 @@ var Validator = (function(){
 	};
 
 	p.message = {
-		required : '入力は必須です。',
-		checkRequired : 'チェックが必要です。',
-		email : '許可できないemailアドレスです。',
-		min : '文字数が少ないです。',
-		max : '文字数が多いです。',
-		numalpha : '英数字のみで入力してください。',
-		alphabet : '英字のみで入力してください。',
-		number : '数字のみで入力してください。',
+
+		required : 'required!',
+		checkRequired : 'require checked! ',
+		email : 'invalid email',
+		min : 'too less!',
+		max : 'too long!',
+		numalpha : 'only number or alphabet',
+		alphabet : 'only alphabet',
+		number : 'only number',
 		custom : {}
+
 	};
 
 	p.parseTask = function(d){
@@ -75,14 +77,15 @@ var Validator = (function(){
 	},
 
 	p.show = function(elm,msg){
-		var errElm = document.getElementById(elm.name+'-err');
+		var errDispElmId = elm.getAttribute('data-error-id');
+		var errElm = document.getElementById(errDispElmId);
 		if(errElm && errElm.textContent == msg) return true;
 		if(errElm){
 			errElm.textContent = msg;
 		}else{
 			var errDisp = document.createElement('span');
-			errDisp.id = elm.name+'-err';
-			errDisp.className = 'err';
+			errDisp.id = errDispElmId;
+			errDisp.className = 'valid-error';
 			errDisp.textContent = msg;
 			var td = elm.parentElement;
 			td.appendChild(errDisp);
@@ -90,7 +93,8 @@ var Validator = (function(){
 	};
 
 	p.hide = function(elm){
-		var errDisp = document.getElementById(elm.name+'-err');
+		var errDispElmId = elm.getAttribute('data-error-id');
+		var errDisp = document.getElementById(errDispElmId);
 		if(errDisp){
 			var td = elm.parentElement;
 			td.removeChild(errDisp);
@@ -100,7 +104,6 @@ var Validator = (function(){
 	p.validation = function(evt){
 		var self = this;
 		var elm = evt.target
-		var errCnt = 0;
 		var msg = [];
 		var valiDataArr = elm.getAttribute('data-valid').split(',');
 		valiDataArr.forEach(function(valiData){
@@ -111,10 +114,8 @@ var Validator = (function(){
 			if(customType){
 				var _v = self.isValid[type][customType](self,elm,arg);
 				if(!_v) msg.push(self.message[type][customType]);
-				//(_v)? self.hide(elm): self.show(elm,self.message[type][customType]);
 			}else{
 				var _v = self.isValid[type](self,elm,arg);
-				//(_v)? self.hide(elm): self.show(elm,self.message[type]);
 				if(!_v) msg.push(self.message[type]);
 			}
 		});
@@ -132,12 +133,29 @@ var Validator = (function(){
 	p.init = function(){
 		var self = this;
 		var obj = self._form.querySelectorAll('*[data-valid]');
-		self.listeners = Array.prototype.slice.call(obj);
+		var listeners = Array.prototype.slice.call(obj);
 
-		self.listeners.forEach(function(listener){
+		listeners.forEach(function(listener){
 			listener.addEventListener('change',function(event){self.validation(event)},false);
 			listener.addEventListener('blur',function(event){self.validation(event)},false);
 		});
+	};
+
+	p.forceValidationAll = function(f){
+		var self = this;
+		var obj = f.querySelectorAll('*[data-valid]');
+		var listeners = Array.prototype.slice.call(obj);
+
+		var evt = document.createEvent('MouseEvents');
+		evt.initEvent('blur',false,true);
+		listeners.forEach(function(listener){
+			listener.dispatchEvent(evt);
+		});
+	};
+
+	p.hasErrors = function(f){
+		var obj = f.querySelectorAll('*.valid-error');//classに'err'のある要素
+		return !obj.length;
 	};
 
 	p.hook = {};

@@ -15,3 +15,18 @@ Validator.prototype.hook.changeReq = function(self,elm){
 	}
 	return true;
 };
+
+Validator.prototype.isValid.nameRequired = function(self,elm){
+	//same data-valid value check required
+	var elms = document.querySelectorAll('input[data-valid="nameRequired"]');
+	if(!elms.length) return true;
+
+	var errors = [];
+	for(var i=0,len=elms.length; i<len; i++){
+		var check = self.isValid.required(self,elms[i]);
+		if(!check) errors.push(check);
+	}
+	return (errors.length)? false: true;
+};
+
+Validator.prototype.message.nameRequired = '名前の欄は両方入力必須です。';
