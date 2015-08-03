@@ -17,13 +17,36 @@
 
 ### synopsis
 
-required
-
 ```html
-<input type="text" name="hoge" data-valid="required"/>
+<input type="text" name="hoge" data-valid="required,number,min[4],max[12]" data-error-id="nameErr" data-error-message="please input your lucky number."/>
 ```
 
-use dataset name is 'data-valid'.  
-value is required,checkRequired,min,max...
+#### valid rule
+
+attribute name data-valid is assignment validation rule.
+if you want multi rule then separate ,(connma).
+set argument is []
+
+validation rules value is required,checkRequired,min,max...
+
+other, you can customize.
+
+
+#### designation error display dom
+
+data-error-id is designation show the error message element.
+
+if multiplex input element to one error message element then same data-error-id.
+
+#### assignment special error message
+
+you can change error messages , you can extentionable error messages.
+you wrote validation-messages.js if change error messages.
+
+but if not use default error message, assignment individually error message.
+
+set data-error-message attribute then used it.
+
+
 
 please show sample.

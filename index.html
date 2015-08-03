@@ -14,7 +14,7 @@
   <form action="http://yahoo.co.jp" method="post" id="form1">
     <div>
       <h4>Required</h4>
-      <p><input type="text" name="name"  data-valid="required" data-error-id="nameErr"/></p>
+      <p><input type="text" name="name"  data-valid="required" data-error-id="nameErr" data-error-message="いろいろと入力してください"/></p>
       <p><textarea rows="5" cols="40" name="text" data-valid="required" data-error-id="textErr"></textarea></p>
       <p><select name="selector" data-valid="required" data-error-id="selectErr">
         <option value="">------------</option>
@@ -56,8 +56,8 @@
     <div>
       <h4>Customize</h4>
       <p>
-        <span>First Name:<input type="text" name="firstName"  data-valid="nameRequired" data-error-id="nameGErr"/>
-        <span>Family Name:<input type="text" name="familyName"  data-valid="nameRequired" data-error-id="nameGErr"/>
+        <span>First Name:</span><input type="text" name="firstName"  data-valid="nameRequired" data-error-id="nameGErr"/>
+        <span>Family Name:</span><input type="text" name="familyName"  data-valid="nameRequired" data-error-id="nameGErr"/>
       </p>
     </div>
     <div>

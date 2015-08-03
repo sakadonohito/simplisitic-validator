@@ -76,7 +76,8 @@ var Validator = (function(){
 		return ret;
 	},
 
-	p.show = function(elm,msg){
+	p.show = function(elm,m){
+		var msg = elm.getAttribute('data-error-message') || m;
 		var errDispElmId = elm.getAttribute('data-error-id');
 		var errElm = document.getElementById(errDispElmId);
 		if(errElm && errElm.textContent == msg) return true;
